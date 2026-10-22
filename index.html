@@ -42,6 +42,8 @@
   header h1 span { color: var(--gold); }
   header p { margin-top: 14px; opacity: 0.85; font-size: 1.05rem; }
   main { padding: 0 20px 64px; margin-top: -32px; }
+  .event { scroll-margin-top: 16px; transition: box-shadow 0.4s; }
+  .event.hit { box-shadow: 0 0 0 4px var(--gold), 0 6px 24px rgba(31, 57, 106, 0.12); }
   .event {
     background: var(--card);
     border-radius: 16px;
@@ -108,6 +110,7 @@
   // soldOut: true setzen, wenn ausgebucht (Button wird grau).
   const EVENTS = [
     {
+      slug: "burger",
       date: "2026-10-27",
       title: "Smashed Burger bei Nenad",
       text: "Frisch gesmashte Burger vom Grill, kalte Getränke und ein entspannter Abend in netter Runde. Wer zuerst kommt, isst zuerst. Es wird früh dunkel und frisch, also packt eine warme Jacke ein.",
@@ -118,6 +121,7 @@
       soldOut: false
     },
     {
+      slug: "bowling",
       date: "2026-10-29",
       title: "Bowling",
       text: "Ein paar Runden Bowling im Bowling Room, gute Leute und ein lockerer Abend.",
@@ -128,6 +132,7 @@
       soldOut: false
     },
     {
+      slug: "gluehwein",
       date: "2026-11-29",
       title: "Glühwein-Wanderung",
       text: "Wir füllen die Thermoskannen mit Glühwein oder Punsch, fahren mit dem Zug nach Winningen und wandern durch die Weinberge zurück nach Koblenz. Bring deine eigene Thermoskanne mit!",
@@ -153,7 +158,7 @@
     el.innerHTML = '<div class="empty">Gerade ist nichts geplant – schau bald wieder vorbei.</div>';
   } else {
     el.innerHTML = upcoming.map(e => `
-      <article class="event">
+      <article class="event" id="${esc(e.slug || "")}">
         <span class="date">${esc(fmt.format(new Date(e.date + "T12:00:00")))}</span>
         <h2>${esc(e.title)}</h2>
         <p>${esc(e.text)}</p>
@@ -166,6 +171,15 @@
           ? '<span class="btn off">Ausgebucht</span>'
           : `<a class="btn" href="${esc(e.link)}">Jetzt anmelden</a>`}
       </article>`).join("");
+  }
+
+  // Sprungmarke (#burger etc.): zum Event scrollen und kurz hervorheben
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const hit = hash && document.getElementById(hash);
+  if (hit) {
+    hit.classList.add("hit");
+    hit.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => hit.classList.remove("hit"), 4000);
   }
 </script>
 </body>
