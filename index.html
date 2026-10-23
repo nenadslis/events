@@ -71,8 +71,8 @@
   }
   .event p { margin-bottom: 14px; }
   .facts { list-style: none; margin-bottom: 20px; }
-  .facts li { padding: 6px 0; border-top: 1px solid #E6ECF2; }
-  .facts li strong { color: var(--navy); display: inline-block; min-width: 72px; }
+  .facts li { padding: 6px 0; border-top: 1px solid #E6ECF2; display: grid; grid-template-columns: 72px 1fr; column-gap: 8px; }
+  .facts li strong { color: var(--navy); }
   .btn {
     display: inline-block;
     background: var(--navy);
@@ -174,9 +174,9 @@
         <h2>${esc(e.title)}</h2>
         <p>${esc(e.text)}</p>
         <ul class="facts">
-          <li><strong>Wann</strong> ${esc(e.time)}</li>
-          <li><strong>Wo</strong> ${esc(e.place)}</li>
-          <li><strong>Preis</strong> ${esc(e.price)}</li>
+          <li><strong>Wann</strong><span>${esc(e.time)}</span></li>
+          <li><strong>Wo</strong><span>${esc(e.place)}</span></li>
+          <li><strong>Preis</strong><span>${esc(e.price)}</span></li>
         </ul>
         ${e.soldOut
           ? '<span class="btn off">Ausgebucht</span>'
