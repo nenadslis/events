@@ -84,6 +84,8 @@
   }
   .btn:hover { background: var(--blue); }
   .btn.off { background: #9AA8B8; pointer-events: none; }
+  .wl { margin: 12px 0 0; font-size: 0.9rem; }
+  .wl a { color: var(--navy); font-weight: 600; }
   .empty { background: var(--card); border-radius: 16px; padding: 28px 24px; text-align: center; }
   footer { text-align: center; font-size: 0.85rem; padding: 0 20px 40px; color: var(--navy); opacity: 0.7; }
 </style>
@@ -190,7 +192,7 @@
         </ul>
         ${e.soldOut
           ? (e.waitlist ? `<a class="btn" href="${esc(e.waitlist)}">Auf die Warteliste</a>` : '<span class="btn off">Ausgebucht</span>')
-          : `<a class="btn" href="${esc(e.link)}">Jetzt anmelden</a>`}
+          : `<a class="btn" href="${esc(e.link)}">Jetzt anmelden</a>${e.waitlist ? `<p class="wl">Schon ausgebucht? <a href="${esc(e.waitlist)}">Hier auf die Warteliste</a></p>` : ""}`}
       </article>`).join("");
   }
 
