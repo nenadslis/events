@@ -105,7 +105,7 @@
 <script>
   // ===== EVENTS PFLEGEN: neues Event = neuer Eintrag in dieser Liste =====
   // date: Tag des Events (JJJJ-MM-TT). Vergangene Events verschwinden automatisch.
-  // soldOut: true setzen, wenn ausgebucht (Button wird grau).
+  // soldOut: true setzen, wenn ausgebucht (Button wird grau – oder führt zur Warteliste, falls waitlist gesetzt).
   const EVENTS = [
     {
       slug: "spareribs",
@@ -127,6 +127,18 @@
       place: "Padel City, Judengäßchen 1, 56218 Mülheim-Kärlich",
       price: "3,50 € p. P. · per PayPal direkt nach der Anmeldung · max. 16 Plätze",
       link: "https://tally.so/r/dbNE9r",
+      soldOut: false
+    },
+    {
+      slug: "padel-21",
+      date: "2026-11-21",
+      title: "Padel Americano",
+      text: "Wir spielen ein Americano-Turnier in drei Spielstärken: Anfänger, Fortgeschrittene und Profis. Deine Spielstärke wählst du bei der Anmeldung selbst. Du wechselst jede Runde den Partner, am Ende zählen deine Punkte. Bitte mit vollem Namen anmelden.",
+      time: "20:00 Uhr",
+      place: "Padel City, Judengäßchen 1, 56218 Mülheim-Kärlich",
+      price: "5 € p. P. · per PayPal direkt nach der Anmeldung · 24 Plätze + Warteliste",
+      link: "https://tally.so/r/zENj18",
+      waitlist: "https://tally.so/r/yXNMdp",
       soldOut: false
     },
     {
@@ -177,7 +189,7 @@
           <li><strong>Preis</strong><span>${esc(e.price)}</span></li>
         </ul>
         ${e.soldOut
-          ? '<span class="btn off">Ausgebucht</span>'
+          ? (e.waitlist ? `<a class="btn" href="${esc(e.waitlist)}">Auf die Warteliste</a>` : '<span class="btn off">Ausgebucht</span>')
           : `<a class="btn" href="${esc(e.link)}">Jetzt anmelden</a>`}
       </article>`).join("");
   }
