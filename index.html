@@ -121,6 +121,7 @@
 <script>
   // ===== EVENTS PFLEGEN: neues Event = neuer Eintrag in dieser Liste =====
   // date: Tag des Events (JJJJ-MM-TT). Vergangene Events verschwinden automatisch.
+  // fewAt: ab wann "Nur noch X Plätze" kommt (Standard: unter 10).
   // sheet/max: Blattname in "Event-Teilnehmer" und Platzanzahl – Restplätze kommen automatisch aus dem Blatt "Plätze".
   // soldOut: true setzen, wenn ausgebucht (Button wird grau – oder führt zur Warteliste, falls waitlist gesetzt).
   const EVENTS = [
@@ -128,6 +129,7 @@
       slug: "spareribs",
       sheet: "Spare Ribs 10.11.",
       max: 10,
+      fewAt: 5,
       date: "2026-11-10",
       title: "Spare Ribs bei Nenad",
       text: "Zarte Spare Ribs vom Grill, kalte Getränke und ein entspannter Abend in netter Runde. Wer zuerst kommt, isst zuerst. Es wird früh dunkel und frisch, also packt eine warme Jacke ein.",
@@ -224,7 +226,7 @@
       const n = counts && e.sheet in counts ? counts[e.sheet] : null;
       const free = e.max && n !== null ? e.max - n : null;
       const full = e.soldOut || (free !== null && free <= 0);
-      const few = !full && free !== null && free < 5;
+      const few = !full && free !== null && free < (e.fewAt || 10);
       return `
       <article class="event${full ? " full" : ""}" id="${esc(e.slug || "")}">
         <span class="date">${esc(fmt.format(new Date(e.date + "T12:00:00")))}</span>
