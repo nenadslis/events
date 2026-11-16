@@ -109,7 +109,9 @@
       const list = cand.map(e => {
         const n = counts && e.sheet in counts ? counts[e.sheet] : null;
         return Object.assign({}, e, { free: e.max && n !== null ? e.max - n : null });
-      }).filter(e => e.free === null || e.free > 0).slice(0, 2);
+      }).filter(e => e.free === null || e.free > 0)
+        .filter((e, i, a) => a.findIndex(x => key(x.title) === key(e.title)) === i) // jedes Format nur einmal
+        .slice(0, 2);
       if (!list.length) return;
       document.getElementById("next-list").innerHTML = list.map(e => `
         <a class="item" href="/#${esc(e.slug)}">
