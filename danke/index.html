@@ -23,6 +23,14 @@
   .btn:hover { background: var(--blue); }
   .note { font-size: 0.95rem; color: var(--navy); background: #EEF2F7; border-radius: 10px; padding: 12px 14px; }
   .done { text-align: center; color: var(--navy); font-weight: 600; }
+  .next h2 { margin-top: 0; }
+  .next .item { display: block; text-decoration: none; color: inherit; border-top: 1px solid #E6ECF2; padding: 14px 0; }
+  .next .item:first-of-type { border-top: 0; padding-top: 4px; }
+  .next .d { display: inline-block; background: var(--gold); color: var(--navy); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px; }
+  .next .t { display: block; color: var(--navy); font-weight: 800; font-size: 1.1rem; margin-top: 6px; }
+  .next .s { display: block; font-size: 0.92rem; }
+  .next .go { display: inline-block; margin-top: 8px; color: var(--navy); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .next .few { color: #C62828; font-weight: 700; font-size: 0.88rem; }
   .back { display: block; text-align: center; color: var(--navy); margin-top: 8px; font-size: 0.9rem; opacity: 0.7; }
 </style>
 </head>
@@ -40,7 +48,17 @@
     <a class="btn" id="pay-btn" href="https://paypal.me/nenadsliskovic">Mit PayPal zahlen</a>
     <p class="note" id="wellpass" hidden style="margin-top:16px;margin-bottom:0">Du hast Wellpass? Dann musst du nichts zahlen, du bist schon fertig.</p>
   </div>
-  <div class="card done">
+  <div class="card" id="wl-card" hidden>
+    <span class="step">Warteliste</span>
+    <h2>Ich melde mich bei dir</h2>
+    <p style="margin-bottom:0">Sobald ein Platz frei wird, schreibe ich dir. Erst dann zahlst du. Bis dahin musst du nichts tun.</p>
+  </div>
+  <div class="card next" id="next" hidden>
+    <span class="step" id="next-step">Auch noch frei</span>
+    <h2 id="next-title">Das steht als Nächstes an</h2>
+    <div id="next-list"></div>
+  </div>
+  <div class="card done" id="done">
     Bezahlt? Dann ist alles erledigt, wir sehen uns!<br>
     Fragen? <a href="https://wa.me/4915161034133" style="color:inherit">Schreib mir auf WhatsApp.</a>
   </div>
@@ -62,6 +80,60 @@
     document.getElementById("pay").hidden = true;
   }
   if (w === "1") document.getElementById("wellpass").hidden = false;
+
+  // Warteliste: /danke/?e=...&wl=1
+  const isWl = q.get("wl") === "1";
+  if (isWl) {
+    document.querySelector("header h1").textContent = "Du bist auf der Warteliste!";
+    document.getElementById("pay").hidden = true;
+    document.getElementById("wl-card").hidden = false;
+    document.getElementById("done").innerHTML = 'Fragen? <a href="https://wa.me/4915161034133" style="color:inherit">Schreib mir auf WhatsApp.</a>';
+    document.getElementById("next-step").textContent = "Kein Platz?";
+    document.getElementById("next-title").textContent = "Hier ist noch was frei";
+  }
+</script>
+<script src="/events.js"></script>
+<script>
+  // Andere kommende Events mit freien Plätzen anzeigen (max. 2), das gebuchte Event-Format ausgeschlossen
+  (function () {
+    if (typeof EVENTS === "undefined") return;
+    const booked = (new URLSearchParams(location.search).get("e") || "").toLowerCase();
+    const key = t => t.toLowerCase().split(/[\s–-]+/)[0];
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const fmt = new Intl.DateTimeFormat("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" });
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const cand = EVENTS
+      .filter(e => new Date(e.date + "T23:59:59") >= today && !e.soldOut && !(booked && booked.includes(key(e.title))))
+      .sort((a, b) => a.date.localeCompare(b.date));
+    function show(counts) {
+      const list = cand.map(e => {
+        const n = counts && e.sheet in counts ? counts[e.sheet] : null;
+        return Object.assign({}, e, { free: e.max && n !== null ? e.max - n : null });
+      }).filter(e => e.free === null || e.free > 0).slice(0, 2);
+      if (!list.length) return;
+      document.getElementById("next-list").innerHTML = list.map(e => `
+        <a class="item" href="/#${esc(e.slug)}">
+          <span class="d">${esc(fmt.format(new Date(e.date + "T12:00:00")))}</span>
+          <span class="t">${esc(e.title)}</span>
+          <span class="s">${esc(e.time)} · ${esc(e.place.split(",")[0])}</span>
+          ${e.free !== null && e.free < (e.fewAt || 10) ? `<span class="few">Nur noch ${e.free} ${e.free === 1 ? "Platz" : "Plätze"} frei</span><br>` : ""}
+          <span class="go">Ansehen &amp; anmelden →</span>
+        </a>`).join("");
+      document.getElementById("next").hidden = false;
+    }
+    const CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTZkuG6ITQ3qpJcdCq-FKdPrM4yEJqPtyqoB3Cu-Q5RW8RfrO1QGhUY3Lgd6GqEhRrAjd_ydgyMIGLW/pub?gid=1319352177&single=true&output=csv";
+    fetch(CSV + "&t=" + Date.now())
+      .then(r => r.ok ? r.text() : Promise.reject())
+      .then(txt => {
+        const counts = {};
+        txt.trim().split(/\r?\n/).slice(1).forEach(line => {
+          const m = line.match(/^"?(.*?)"?,"?(\d+)"?$/);
+          if (m) counts[m[1]] = +m[2];
+        });
+        show(counts);
+      })
+      .catch(() => show(null));
+  })();
 </script>
 </body>
 </html>
