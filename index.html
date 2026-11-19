@@ -152,6 +152,12 @@
           <li><strong>Preis</strong><span>${esc(e.price)}</span></li>
         </ul>
         ${few ? `<p class="few">Nur noch ${free} ${free === 1 ? "Platz" : "Plätze"} frei!</p>` : ""}
+        ${(() => {
+          if (full || !e.players || !counts || !(e.players.sheet in counts)) return "";
+          const pf = e.players.max - counts[e.players.sheet];
+          return pf <= 0 ? '<p class="few">Mitspieler-Plätze voll – du kannst noch zum Gucken kommen.</p>'
+               : pf < 6 ? `<p class="few">Nur noch ${pf} ${pf === 1 ? "Mitspieler-Platz" : "Mitspieler-Plätze"} frei!</p>` : "";
+        })()}
         ${full
           ? (e.waitlist ? `<a class="btn" href="${esc(e.waitlist)}">Auf die Warteliste</a>` : '<span class="btn off">Ausgebucht</span>')
           : `<a class="btn" href="${esc(e.link)}">Jetzt anmelden</a>`}

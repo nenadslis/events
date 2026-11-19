@@ -114,6 +114,21 @@ const EVENTS = [
     soldOut: false
   },
   {
+    slug: "darts",
+    sheet: "Darts 29.12.",
+    max: 30,
+    fewAt: 10,
+    players: { sheet: "Darts 29.12. Mitspieler", max: 16 },
+    date: "2026-12-29",
+    title: "Darts-WM & Turnier",
+    text: "Darts-WM live und dazu unser eigenes Turnier: Wir gucken die Nachmittagsspiele aus dem Ally Pally und werfen zwischendurch selbst. Du entscheidest bei der Anmeldung, ob du mitspielst oder einfach zum Gucken kommst. Wer mitspielt, braucht einen Spielernamen und einen Einlaufsong – wie bei den Profis. Bitte mit vollem Namen anmelden.",
+    time: "13:00 Uhr Get-together · 13:30 Uhr erstes WM-Spiel · 14:00 Uhr Start unseres Turniers",
+    place: "Frankenstraße 21, 56068 Koblenz",
+    price: "5 € p. P. inkl. Getränke und Snacks · per PayPal direkt nach der Anmeldung · max. 30 Leute, davon 16 Mitspieler",
+    link: "https://tally.so/r/1W4011",
+    soldOut: false
+  },
+  {
     slug: "quiz",
     sheet: "Quiz 04.12.",
     max: 32,
