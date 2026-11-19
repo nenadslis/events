@@ -33,6 +33,20 @@ const EVENTS = [
     soldOut: false
   },
   {
+    slug: "thanksgiving",
+    sheet: "Thanksgiving 26.11.",
+    max: 10,
+    fewAt: 5,
+    date: "2026-11-26",
+    title: "Thanksgiving Football",
+    text: "Thanksgiving auf amerikanisch: Truthahn mit allem, was dazugehört, und dazu live NFL – die Chicago Bears zu Gast bei den Detroit Lions. Erst wird gegessen, um 19 Uhr ist Kickoff. Football-Ahnung ist keine Pflicht, gute Laune schon.",
+    time: "18:00 Uhr · Kickoff 19:00 Uhr",
+    place: "Kurfürstenstraße 56, 56068 Koblenz",
+    price: "15 € p. P. inkl. Truthahn und Getränken · per PayPal direkt nach der Anmeldung · nur 10 Plätze",
+    link: "https://tally.so/r/LDKxeJ",
+    soldOut: false
+  },
+  {
     slug: "padel-21",
     sheet: "Padel 23.11.",
     max: 24,
