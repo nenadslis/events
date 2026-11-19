@@ -69,6 +69,7 @@
     text-transform: uppercase;
   }
   .event p { margin-bottom: 14px; }
+  .ico { margin-right: 10px; font-size: 1.4rem; vertical-align: 2px; }
   .facts { list-style: none; margin-bottom: 20px; }
   .facts li { padding: 6px 0; border-top: 1px solid #E6ECF2; display: grid; grid-template-columns: 72px 1fr; column-gap: 8px; }
   .facts li strong { color: var(--navy); }
@@ -144,7 +145,7 @@
       return `
       <article class="event${full ? " full" : ""}" id="${esc(e.slug || "")}">
         <span class="date">${esc(fmt.format(new Date(e.date + "T12:00:00")))}</span>
-        <h2>${esc(e.title)}</h2>
+        <h2>${e.icon ? `<span class="ico" aria-hidden="true">${esc(e.icon)}</span>` : ""}${esc(e.title)}</h2>
         <p>${esc(e.text)}</p>
         <ul class="facts">
           <li><strong>Wann</strong><span>${esc(e.time)}</span></li>

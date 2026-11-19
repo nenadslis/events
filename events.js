@@ -2,10 +2,12 @@
 // date: Tag des Events (JJJJ-MM-TT). Vergangene Events verschwinden automatisch.
 // fewAt: ab wann "Nur noch X Plätze" kommt (Standard: unter 10).
 // sheet/max: Blattname in "Event-Teilnehmer" und Platzanzahl – Restplätze kommen automatisch aus dem Blatt "Plätze".
+// icon: kleines Symbol (Emoji) vor dem Titel.
 // soldOut: true setzen, wenn ausgebucht (Button wird grau – oder führt zur Warteliste, falls waitlist gesetzt).
 const EVENTS = [
   {
     slug: "grillen",
+    icon: "🔥",
     sheet: "Grillen 17.11.",
     max: 10,
     fewAt: 5,
@@ -20,6 +22,7 @@ const EVENTS = [
   },
   {
     slug: "grillen-24",
+    icon: "🔥",
     sheet: "Grillen 24.11.",
     max: 10,
     fewAt: 5,
@@ -34,6 +37,7 @@ const EVENTS = [
   },
   {
     slug: "thanksgiving",
+    icon: "🇺🇸🦃",
     sheet: "Thanksgiving 26.11.",
     max: 10,
     fewAt: 5,
@@ -48,6 +52,7 @@ const EVENTS = [
   },
   {
     slug: "padel-21",
+    icon: "🎾",
     sheet: "Padel 23.11.",
     max: 24,
     date: "2026-11-23",
@@ -62,6 +67,7 @@ const EVENTS = [
   },
   {
     slug: "cocktailparty",
+    icon: "🍹",
     date: "2026-11-27",
     title: "Die legendäre Cocktailparty",
     text: "Same office, different vibe: Die legendäre Cocktailparty ist zurück! Wir shaken, mixen und feiern – All you can drink Cocktails, gute Musik und gute Leute. Bring gern Freunde mit, jede Person meldet sich einzeln mit vollem Namen an.",
@@ -73,6 +79,7 @@ const EVENTS = [
   },
   {
     slug: "gluehwein",
+    icon: "🍷",
     sheet: "Glühwein 29.11.",
     date: "2026-11-29",
     title: "Glühwein-Wanderung",
@@ -85,6 +92,7 @@ const EVENTS = [
   },
   {
     slug: "padel-30",
+    icon: "🎾",
     sheet: "Padel 30.11.",
     max: 32,
     fewAt: 15,
@@ -100,6 +108,7 @@ const EVENTS = [
   },
   {
     slug: "padel-07",
+    icon: "🎾",
     sheet: "Padel 07.12.",
     max: 32,
     fewAt: 15,
@@ -115,6 +124,7 @@ const EVENTS = [
   },
   {
     slug: "darts",
+    icon: "🎯",
     sheet: "Darts 29.12.",
     max: 30,
     fewAt: 10,
@@ -130,6 +140,7 @@ const EVENTS = [
   },
   {
     slug: "quiz",
+    icon: "🧠",
     sheet: "Quiz 04.12.",
     max: 32,
     date: "2026-12-04",
@@ -143,6 +154,7 @@ const EVENTS = [
   },
   {
     slug: "rosenmontag",
+    icon: "🎭",
     sheet: "Rosenmontag 08.02.",
     date: "2027-02-08",
     title: "Rosenmontag in Kowelenz – Party",
