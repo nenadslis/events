@@ -21,21 +21,6 @@ const EVENTS = [
     soldOut: false
   },
   {
-    slug: "grillen-24",
-    icon: "🔥",
-    sheet: "Grillen 24.11.",
-    max: 10,
-    fewAt: 5,
-    date: "2026-11-24",
-    title: "Grillabend bei Nenad",
-    text: "Der Grill wird wieder angeworfen – was auf den Rost kommt, bleibt noch ein Geheimnis. Bei der Anmeldung sagst du mir, worauf du Lust hast: Eure Wünsche entscheiden das Menü. Dazu kalte Getränke und ein entspannter Abend in netter Runde. Es wird früh dunkel und frisch, also packt eine warme Jacke ein.",
-    time: "18:00 Uhr",
-    place: "Kurfürstenstraße 56, 56068 Koblenz",
-    price: "12 € p. P. inkl. Getränke · per PayPal direkt nach der Anmeldung · nur 10 Plätze",
-    link: "https://tally.so/r/gbqeY4",
-    soldOut: false
-  },
-  {
     slug: "thanksgiving",
     icon: "🇺🇸🦃",
     sheet: "Thanksgiving 26.11.",
